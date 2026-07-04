@@ -1,6 +1,78 @@
 """
 Accepted
 2812 [Medium]
+Runtime: 3729 ms, faster than 36.76% of Python3 online submissions for Find the Safest Path in a Grid.
+Memory Usage: 56.88 MB, less than 9.49% of Python3 online submissions for Find the Safest Path in a Grid.
+"""
+# Multi-source BFS + Sorting + Union-Find Solution
+# TC: O(n^2.log(n)), SC: O(n^2)
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+        self.rank = [1] * n
+
+    def find(self, node):
+        while self.parent[node] != node:
+            self.parent[node] = self.parent[self.parent[node]]      # Path halving
+            node = self.parent[node]
+        return self.parent[node]
+
+    def union(self, node1, node2):
+        par1, par2 = self.find(node1), self.find(node2)
+        if par1 == par2:
+            return
+
+        if self.rank[par1] > self.rank[par2]:
+            self.parent[par2] = par1
+        elif self.rank[par2] > self.rank[par1]:
+            self.parent[par1] = par2
+        else:
+            self.parent[par2] = par1
+            self.rank[par1] += 1
+
+
+class Solution:
+    def maximumSafenessFactor(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+
+        directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+        # Multi-source Breadth-First Search
+        queue = deque([(row, col, 0) for row in range(n) for col in range(n) if grid[row][col]])
+        man_dist = {}
+        while queue:
+            r, c, dist = queue.popleft()
+
+            if (r, c) in man_dist:
+                continue
+            man_dist[(r, c)] = dist
+
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in man_dist:
+                    queue.append((nr, nc, dist + 1))
+
+        # Active greedily cells with highest manhattan distance
+        cells = sorted(man_dist, key=man_dist.get, reverse=True)
+
+        active = [[False] * n for _ in range(n)]
+        uf = UnionFind(n*n)
+
+        for r, c in cells:
+            active[r][c] = True
+            node = r * n + c
+
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < n and 0 <= nc < n and active[nr][nc]:
+                    uf.union(node, nr * n + nc)
+
+            if uf.find(0) == uf.find(n * n - 1):
+                return man_dist[(r, c)]
+
+
+
+"""
 Runtime: 5360 ms, faster than 9.54% of Python3 online submissions for Find the Safest Path in a Grid.
 Memory Usage: 77.23 MB, less than 5.20% of Python3 online submissions for Find the Safest Path in a Grid.
 """
