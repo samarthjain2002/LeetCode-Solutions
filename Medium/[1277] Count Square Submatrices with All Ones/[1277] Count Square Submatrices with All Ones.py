@@ -2,7 +2,7 @@
 Accepted
 1277 [Medium]
 Runtime: 67 ms, faster than 44.93% of Python3 online submissions for Count Square Submatrices with All Ones.
-Memory Usage:  19.19 MB, less than 23.45% of Python3 online submissions for Count Square Submatrices with All Ones.
+Memory Usage: 19.19 MB, less than 23.45% of Python3 online submissions for Count Square Submatrices with All Ones.
 """
 # Dynamic Programming solution
 class Solution:

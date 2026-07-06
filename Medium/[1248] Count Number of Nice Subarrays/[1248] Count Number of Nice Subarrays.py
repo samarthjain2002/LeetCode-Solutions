@@ -2,7 +2,7 @@
 Accepted
 1248 [Medium]
 Runtime: 578 ms, faster than 83.66% of Python3 online submissions for Count Number of Nice Subarrays.
-Memory Usage:  23.65 MB, less than 42.15% of Python3 online submissions for Count Number of Nice Subarrays.
+Memory Usage: 23.65 MB, less than 42.15% of Python3 online submissions for Count Number of Nice Subarrays.
 """
 class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
