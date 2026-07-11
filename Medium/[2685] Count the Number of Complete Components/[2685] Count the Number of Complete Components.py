@@ -57,8 +57,44 @@ class Solution:
 
 
 """
-Accepted
-2685 [Easy]
+Runtime: 39 ms, faster than 66.77% of Python3 online submissions for Count the Number of Complete Components.
+Memory Usage: 21.63 MB, less than 10.56% of Python3 online submissions for Count the Number of Complete Components.
+"""
+# DFS Solution
+# TC: O(n+m), SC: O(n+m)
+class Solution:
+    def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        edgeMap = defaultdict(list)
+        for a, b in edges:
+            edgeMap[a].append(b)
+            edgeMap[b].append(a)
+
+        def dfs(vertex, component_info):
+            visited.add(vertex)
+            component_info[0] += 1
+            component_info[1] += len(edgeMap[vertex])
+
+            for nei in edgeMap[vertex]:
+                if nei not in visited:
+                    dfs(nei, component_info)
+
+        visited = set()
+        complete_count = 0
+        for vertex in range(n):
+            if vertex not in visited:
+                component_info = [0, 0]
+                dfs(vertex, component_info)
+
+                node_count = component_info[0]
+                edge_count = component_info[1]
+                if edge_count == node_count * (node_count - 1):
+                    complete_count += 1
+                    
+        return complete_count
+
+
+
+"""
 Runtime: 77 ms, faster than 15.37% of Python3 online submissions for Count the Number of Complete Components.
 Memory Usage: 19.60 MB, less than 90.53% of Python3 online submissions for Count the Number of Complete Components.
 """
