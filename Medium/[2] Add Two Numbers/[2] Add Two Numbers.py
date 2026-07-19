@@ -2,7 +2,7 @@
 Accepted
 2 [Medium]
 Runtime: 4 ms, faster than 53.85% of Python3 online submissions for Add Two Numbers.
-Memory Usage:  17.49 MB, less than 11.03% of Python3 online submissions for Add Two Numbers.
+Memory Usage: 17.49 MB, less than 11.03% of Python3 online submissions for Add Two Numbers.
 """
 # Definition for singly-linked list.
 # class ListNode:
