@@ -32,6 +32,42 @@ class Solution:
 
 
 """
+Runtime: 656 ms, faster than 61.82% of Python3 online submissions for Maximize Active Section with Trade I.
+Memory Usage: 21.11 MB, less than 55.45% of Python3 online submissions for Maximize Active Section with Trade I.
+"""
+# TC: O(n), SC: O(n)
+class Solution:
+    def maxActiveSectionsAfterTrade(self, s: str) -> int:
+        n = len(s)
+
+        ones = s.count('1')
+
+        i = 0
+        zero_blocks = []
+        while i < n:
+            # Start of a 1-block
+            while i < n and s[i] == '1':
+                i += 1
+
+            j = i
+            # Start of a 0-block
+            while j < n and s[j] == '0':
+                j += 1
+
+            # Append only if 0-block is encountered
+            if i < n and s[i] == '0':
+                zero_blocks.append(j - i)
+                
+            i = j
+            
+        res = ones
+        for i in range(1, len(zero_blocks)):
+            res = max(res, zero_blocks[i - 1] + zero_blocks[i] + ones)
+        return res
+
+
+
+"""
 Runtime: 993 ms, faster than 30.84% of Python3 online submissions for Maximize Active Section with Trade I.
 Memory Usage: 27.66 MB, less than 9.35% of Python3 online submissions for Maximize Active Section with Trade I.
 """
